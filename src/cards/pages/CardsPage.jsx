@@ -6,8 +6,11 @@ import CardsFeedback from "../components/CardsFeedback";
 import { useSnack } from "../../providers/SnackbarProvider";
 import useCards from "../hooks/useCards";
 import AddNewCardButton from "../components/AddNewCardButton";
+import { useCurrentUser } from "../../users/providers/UserProvider";
 
 export default function CardsPage() {
+  const { user } = useCurrentUser();
+
   const { cards, error, isLoading, getAllCards, handleDelete, handleLike } =
     useCards();
 
@@ -29,7 +32,7 @@ export default function CardsPage() {
         handleDelete={handleDelete}
         handleLike={handleLike}
       />
-      <AddNewCardButton />
+      {user && <AddNewCardButton />}
     </div>
 
   );

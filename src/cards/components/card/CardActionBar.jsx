@@ -11,34 +11,33 @@ export default function CardActionBar({
   handleDelete,
   handleEdit,
   handleLike,
+  likes
 }) {
-  const styleOfIcons = [
-    {
-
-    },
-    {
-      fontSize: '20px', color: '#918A87',
-    },
-  ];
-  const user = useCurrentUser();
+  const { user } = useCurrentUser();
 
   return (
     <CardActions sx={{ justifyContent: "space-between" }}>
       <Box>
-        <IconButton sx={styleOfIcons[0]} onClick={() => handleDelete(cardId)}>
-          <DeleteIcon sx={styleOfIcons[1]} />
+        <IconButton onClick={() => handleDelete(cardId)}>
+          {user && <DeleteIcon sx={{ fontSize: '20px', color: '#918A87' }} />}
         </IconButton>
 
-        <IconButton sx={styleOfIcons[0]} onClick={() => handleEdit(cardId)}>
-          <ModeEditIcon sx={styleOfIcons[1]} />
+        <IconButton onClick={() => handleEdit(cardId)}>
+          {user && <ModeEditIcon sx={{ fontSize: '20px', color: '#918A87' }} />}
         </IconButton>
       </Box>
       <Box>
-        <IconButton sx={styleOfIcons[0]}>
-          <CallIcon sx={styleOfIcons[1]} />
+        <IconButton  >
+          <CallIcon sx={{ fontSize: '20px', color: '#918A87' }} />
         </IconButton>
-        <IconButton sx={styleOfIcons[0]} onClick={() => handleLike(cardId)}>
-          <FavoriteIcon sx={styleOfIcons[1]} />
+        <IconButton onClick={() => handleLike(cardId)}>
+          <FavoriteIcon sx={{
+            fontSize: '20px',
+            color: likes.includes(user._id) ? 'red' : '#918A87',
+            '&:hover': {
+              color: likes.includes(user._id) ? 'red' : '#918A87',
+            },
+          }} />
         </IconButton>
       </Box>
     </CardActions>

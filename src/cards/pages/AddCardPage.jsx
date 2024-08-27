@@ -31,7 +31,7 @@ export default function AddCardPage() {
         { name: 'city', label: 'City', required: true },
         { name: 'street', label: 'Street', required: true },
         { name: 'houseNumber', label: 'House Number', required: true },
-        { name: 'zip', label: 'ZIP Code', required: false },
+        { name: 'zip', label: 'ZIP Code', required: true },
     ];
     return (
         <Form

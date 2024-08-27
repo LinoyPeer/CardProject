@@ -37,6 +37,7 @@ export default function CardComponent({
         handleDelete={handleDelete}
         handleLike={handleLike}
         handleEdit={handleEdit}
+        likes={card.likes}
       />
     </Card>
   );

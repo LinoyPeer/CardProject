@@ -43,8 +43,24 @@ export default function useCards() {
     console.log("Card " + id + " deleted");
   }, []);
 
-  const handleLike = useCallback((id) => {
-    console.log("Card " + id + " has been liked");
+  const handleLike = useCallback(async (id) => {
+    // console.log("Card " + id + " has been liked");
+    // 1. Send patch request to server
+    try {
+      const response = await axios.patch(
+        `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`
+      );
+      const newCard = response.data;
+      setCard(newCard);
+      setCards(prev => prev.map(cardToCheck => {
+        if (cardToCheck._id !== id) { return cardToCheck }
+        return newCard;
+      }));
+
+    } catch (error) {
+      setError(error.message);
+    }
+    setIsLoading(false);
   }, []);
 
   return {

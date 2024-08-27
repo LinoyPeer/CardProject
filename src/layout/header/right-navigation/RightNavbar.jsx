@@ -22,6 +22,7 @@ export default function RightNavbar() {
       </IconButton>
 
       {user ? <Logged /> : <NotLogged />}
+
     </Box>
   );
 }

@@ -28,6 +28,7 @@ export default function CardsFeedback({
         handleLike={handleLike}
       />
     );
+  { user && <AddNewCardButton /> }
 
   return null;
 }
