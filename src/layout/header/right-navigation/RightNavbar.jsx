@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTheme } from "../../../providers/CustomThemeProvider";
 import { Box, IconButton, TextField } from "@mui/material";
 import React from "react";
@@ -7,17 +8,13 @@ import { useCurrentUser } from "../../../users/providers/UserProvider";
 import Logged from "./Logged";
 import NotLogged from "./NotLogged";
 import SearchIcon from '@mui/icons-material/Search';
-import { useSearchParams } from "react-router-dom";
 
 export default function RightNavbar() {
   const { user } = useCurrentUser();
   const { isDark, toggleDarkMode } = useTheme();
-  const [isSearchOpen, setIsSearchOpen] = useSearchParams();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSearchClick = () => {
-    setIsSearchOpen(true);
-  }
-  const handleSearchChanges = () => {
     setIsSearchOpen(true);
   }
 
