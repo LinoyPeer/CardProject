@@ -5,8 +5,11 @@ import CallIcon from "@mui/icons-material/Call";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Box, IconButton, CardActions } from "@mui/material";
 import { useCurrentUser } from "../../../users/providers/UserProvider";
+import ROUTES from "../../../routes/routesModel";
+import { useNavigate } from "react-router-dom";
 
 export default function CardActionBar({
+  userId,
   cardId,
   handleDelete,
   handleEdit,
@@ -14,23 +17,27 @@ export default function CardActionBar({
   likes
 }) {
   const { user } = useCurrentUser();
+  const navigate = useNavigate();
 
   return (
     <CardActions sx={{ justifyContent: "space-between" }}>
       <Box>
-        <IconButton onClick={() => handleDelete(cardId)}>
-          {user && <DeleteIcon sx={{ fontSize: '20px', color: '#918A87' }} />}
-        </IconButton>
+        {user && (user.isAdmin || user._id == userId) && <IconButton onClick={() => handleDelete(cardId)}>
+          <DeleteIcon sx={{ fontSize: '20px', color: '#918A87' }} />
+        </IconButton>}
 
-        <IconButton onClick={() => handleEdit(cardId)}>
-          {user && <ModeEditIcon sx={{ fontSize: '20px', color: '#918A87' }} />}
-        </IconButton>
-      </Box>
+        {user && (user.isAdmin || user._id == userId) && <IconButton onClick={() => {
+          handleEdit(cardId);
+          navigate(ROUTES.EDIT_CARD)
+        }}>
+          <ModeEditIcon sx={{ fontSize: '20px', color: '#918A87' }} />
+        </IconButton>}
+      </Box >
       <Box>
         <IconButton  >
           <CallIcon sx={{ fontSize: '20px', color: '#918A87' }} />
         </IconButton>
-        <IconButton onClick={() => handleLike(cardId)}>
+        {user && < IconButton onClick={() => handleLike(cardId)}>
           <FavoriteIcon sx={{
             fontSize: '20px',
             color: likes.includes(user._id) ? 'red' : '#918A87',
@@ -38,8 +45,8 @@ export default function CardActionBar({
               color: likes.includes(user._id) ? 'red' : '#918A87',
             },
           }} />
-        </IconButton>
+        </IconButton>}
       </Box>
-    </CardActions>
+    </CardActions >
   );
 }

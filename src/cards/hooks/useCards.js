@@ -26,6 +26,19 @@ export default function useCards() {
     setIsLoading(false);
   }, []);
 
+  const getMyCards = useCallback(async () => {
+    try {
+      let response = await axios.get(
+        "https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/my-cards"
+      );
+      setCards(response.data);
+      setSnack("success", "All my cards are here!");
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  }, []);
+
   const getCardById = useCallback(async (id) => {
     try {
       const response = await axios.get(
@@ -39,13 +52,26 @@ export default function useCards() {
     setIsLoading(false);
   }, []);
 
-  const handleDelete = useCallback((id) => {
-    console.log("Card " + id + " deleted");
+  const handleDelete = useCallback(async (id) => {
+    confirm('ARE YOU SURE YOU WANT TO DELETE THIS CARD?')
+    try {
+      const response = await axios.delete(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`);
+      const deletedCard = response.data;
+      setCard(deletedCard);
+      alert('THE CARD HAS DELETED');
+      console.log("Card " + id + " deleted");
+      setCards(prev => prev.map(cardToCheck => {
+        if (cardToCheck._id !== id) { return cardToCheck }
+        return deletedCard;
+      }));
+    } catch (error) {
+      setError(error.message);
+    }
+    setIsLoading(false);
+    getMyCards();
   }, []);
 
   const handleLike = useCallback(async (id) => {
-    // console.log("Card " + id + " has been liked");
-    // 1. Send patch request to server
     try {
       const response = await axios.patch(
         `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`
@@ -72,5 +98,6 @@ export default function useCards() {
     getCardById,
     handleDelete,
     handleLike,
+    getMyCards,
   };
 }

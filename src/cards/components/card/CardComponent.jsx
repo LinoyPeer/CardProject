@@ -33,6 +33,7 @@ export default function CardComponent({
         />
       </CardActionArea>
       <CardActionBar
+        userId={card.user_id}
         cardId={card._id}
         handleDelete={handleDelete}
         handleLike={handleLike}

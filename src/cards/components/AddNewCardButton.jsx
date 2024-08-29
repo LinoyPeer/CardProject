@@ -14,9 +14,9 @@ export default function AddNewCardButton() {
                 position: 'fixed',
                 bottom: 16,
                 right: 16,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#F1E8CF',
                 '&:hover': {
-                    backgroundColor: '#000000',
+                    backgroundColor: '#918A87',
                 },
             }}
             onClick={() => navigate(ROUTES.ADD_CARD)}
@@ -24,9 +24,7 @@ export default function AddNewCardButton() {
             <AddIcon
                 sx={{
                     color: '#000000',
-                    '&:hover': {
-                        color: '#ffffff',
-                    },
+
                 }}
             />
         </Fab>

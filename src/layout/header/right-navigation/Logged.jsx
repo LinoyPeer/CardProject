@@ -26,13 +26,15 @@ export default function Logged() {
           onClick={logOut}
           sx={{
             marginRight: "1em",
-            marginTop: "0.5em",
             marginLeft: "1em",
           }} />
         <IconButton sx={{
           p: 0, display: "inline-flex", marginLeft: 2, marginRight: 2, marginTop: "-0.5em",
         }}>
-          <Avatar alt="avatar" src="/images/avatar.png" />
+          <Avatar alt="avatar" src="/images/avatar.png"
+            sx={{
+              marginTop: "0.5em",
+            }} />
         </IconButton>
       </>
     </Tooltip>

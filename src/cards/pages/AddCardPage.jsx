@@ -19,7 +19,7 @@ export default function AddCardPage() {
     } = useForm(addCardObj, cardSchema, () => { });
     const fields = [
         { name: 'title', label: 'Title', required: true, required: true },
-        { name: 'subtitle', label: 'Subtitle' },
+        { name: 'subtitle', label: 'Subtitle', required: true },
         { name: 'description', label: 'Description', required: true },
         { name: 'phone', label: 'Phone', required: true },
         { name: 'email', label: 'Email', required: true },
@@ -36,7 +36,6 @@ export default function AddCardPage() {
     return (
         <Form
             onSubmit={() => {
-
                 let token = localStorage.getItem('my token');
                 try {
                     const myHeaders = new Headers();
@@ -76,9 +75,6 @@ export default function AddCardPage() {
                         .then((response) => response.text())
                         .then((result) => console.log(result))
                         .catch((error) => console.error(error));
-
-
-
 
                 } catch (error) {
                     console.log(error);

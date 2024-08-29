@@ -19,12 +19,12 @@ export default function AboutPage() {
 
         }}
       >
-        <br />
+        {/* <br /> */}
 
         <Container sx={{ flex: 1, mr: 2 }}>
           <Typography variant="h6">About My Card Website</Typography>
           <Typography variant="body1" paragraph>
-            <br />
+            {/* <br /> */}
 
             Welcome to my Card Website, your go-to platform for creating, managing, and sharing business cards. Whether you're a business owner, freelancer, or just someone who wants to showcase their professional identity, our website offers a seamless experience for all your card needs.
 
@@ -40,9 +40,9 @@ export default function AboutPage() {
             User-Friendly Navigation: Easily navigate through different sections of the website, including the About page, your favorite cards, and more, using our intuitive menu.
 
             Registration & Login: Sign up for an account to unlock additional features like creating and editing cards, liking your favorite designs, and more. Already have an account? Simply log in to continue where you left off.
-            <br />
+            {/* <br />
             <Divider />
-            <br />
+            <br /> */}
             Our Mission
             Our mission is to make professional networking easier by providing a platform where you can create, share, and manage your business cards online. With a focus on simplicity and usability, we aim to help you put your best foot forward, whether you're networking in person or online.
 
