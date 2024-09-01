@@ -28,7 +28,8 @@ export default function CardActionBar({
 
         {user && (user.isAdmin || user._id == userId) && <IconButton onClick={() => {
           handleEdit(cardId);
-          navigate(ROUTES.EDIT_CARD)
+          navigate(ROUTES.EDIT_CARD, { state: { cardId: cardId } })
+
         }}>
           <ModeEditIcon sx={{ fontSize: '20px', color: '#918A87' }} />
         </IconButton>}

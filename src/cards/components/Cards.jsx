@@ -1,11 +1,13 @@
 import { useCallback } from "react";
 import CardComponent from "./card/CardComponent";
 import { Container } from "@mui/material";
+import useCards from "../hooks/useCards";
 
 export default function Cards({ cards, handleDelete, handleLike }) {
   // const handleEdit = (id) => {
   //   console.log("editing card " + id);
   // };
+  const { setCards, setCard, setError } = useCards();
   const handleEdit = useCallback(async (id) => {
     try {
       const response = await axios.put(
