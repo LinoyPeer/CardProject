@@ -1,13 +1,14 @@
-import { useState } from "react";
+// RightNavbar.js
+import React, { useState } from "react";
 import { useTheme } from "../../../providers/CustomThemeProvider";
-import { Box, IconButton, TextField } from "@mui/material";
-import React from "react";
+import { Box, IconButton } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { useCurrentUser } from "../../../users/providers/UserProvider";
 import Logged from "./Logged";
 import NotLogged from "./NotLogged";
 import SearchIcon from '@mui/icons-material/Search';
+import SearchBar from "./SearchBar";
 
 export default function RightNavbar() {
   const { user } = useCurrentUser();
@@ -16,11 +17,16 @@ export default function RightNavbar() {
 
   const handleSearchClick = () => {
     setIsSearchOpen(true);
-  }
+  };
 
   const handleSearchClose = () => {
     setIsSearchOpen(false);
-  }
+  };
+
+  const handleSearch = (query) => {
+    console.log('Search query:', query);
+    handleSearchClose();
+  };
 
   return (
     <Box
@@ -29,20 +35,15 @@ export default function RightNavbar() {
         alignItems: "center",
       }}
     >
-      {isSearchOpen ? (
-        <Box width={100}>
-          <TextField
-            variant="outlined"
-            placeholder="Search..."
-            autoFocus
-            onBlur={handleSearchClose}
-          />
-        </Box>
-      ) : (
-        <IconButton onClick={handleSearchClick}>
-          <SearchIcon />
-        </IconButton>
-      )}
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        {isSearchOpen ? (
+          <SearchBar onSearch={handleSearch} />
+        ) : (
+          <IconButton onClick={handleSearchClick}>
+            <SearchIcon />
+          </IconButton>
+        )}
+      </Box>
 
       <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode}>
         {isDark ? <LightModeIcon /> : <DarkModeIcon />}

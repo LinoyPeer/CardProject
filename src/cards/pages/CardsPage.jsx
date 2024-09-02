@@ -11,7 +11,7 @@ import { useCurrentUser } from "../../users/providers/UserProvider";
 export default function CardsPage() {
   const { user } = useCurrentUser();
 
-  const { cards, error, isLoading, getAllCards, handleDelete, handleLike } =
+  const { cards, error, isLoading, getAllCards, handleDelete, handleLike, filteredCards } =
     useCards();
 
 
@@ -26,7 +26,7 @@ export default function CardsPage() {
         subtitle="On this page you can find all bussines cards from all categories"
       />
       <CardsFeedback
-        cards={cards}
+        cards={filteredCards}
         isLoading={isLoading}
         error={error}
         handleDelete={handleDelete}
