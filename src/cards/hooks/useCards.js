@@ -93,6 +93,8 @@ export default function useCards() {
     cards,
     card,
     error,
+    setError,
+    setIsLoading,
     isLoading,
     getAllCards,
     getCardById,

@@ -7,7 +7,7 @@ export default function Cards({ cards, handleDelete, handleLike }) {
   // const handleEdit = (id) => {
   //   console.log("editing card " + id);
   // };
-  const { setCards, setCard, setError } = useCards();
+  const { setCards, setCard, setError, setIsLoading, } = useCards();
   const handleEdit = useCallback(async (id) => {
     try {
       const response = await axios.put(

@@ -9,7 +9,7 @@ import addCardObj from '../../users/helpers/initialForms/initialCardForm.js';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom'
 import useCards from '../hooks/useCards.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 
@@ -24,44 +24,53 @@ export default function EditCardPage() {
         onSubmit,
     } = useForm(addCardObj, cardSchema, () => { });
     const { getCardById } = useCards();
-    // const try1 = (e) => {
-    //     const tryy = e.target.value;
-    //     return tryy;
-    // }
+
+    const [feildData, setFeildData] = useState({});
 
     const fields = [
-        { name: 'title', label: 'Title', required: true, required: true },
-        { name: 'subtitle', label: 'Subtitle', required: true },
-        { name: 'description', label: 'Description', required: true },
-        { name: 'phone', label: 'Phone', required: true },
-        { name: 'email', label: 'Email', required: true },
-        { name: 'webUrl', label: 'Website', required: false },
-        { name: 'imageUrl', label: 'Image URL', required: false },
-        { name: 'imageAlt', label: 'Image Alt', required: false },
-        { name: 'state', label: 'State', required: false },
-        { name: 'country', label: 'Country', required: true },
-        { name: 'city', label: 'City', required: true },
-        { name: 'street', label: 'Street', required: true },
-        { name: 'houseNumber', label: 'House Number', required: true },
-        { name: 'zip', label: 'ZIP Code', required: true },
+        { name: 'title', label: 'Title', required: true, required: true, defaultValue: feildData.title },
+        { name: 'subtitle', label: 'Subtitle', required: true, defaultValue: "hi" },
+        { name: 'description', label: 'Description', required: true, defaultValue: "hi" },
+        { name: 'phone', label: 'Phone', required: true, defaultValue: "hi" },
+        { name: 'email', label: 'Email', required: true, defaultValue: "hi" },
+        { name: 'webUrl', label: 'Website', required: false, defaultValue: "hi" },
+        { name: 'imageUrl', label: 'Image URL', required: false, defaultValue: "hi" },
+        { name: 'imageAlt', label: 'Image Alt', required: false, defaultValue: "hi" },
+        { name: 'state', label: 'State', required: false, defaultValue: "hi" },
+        { name: 'country', label: 'Country', required: true, defaultValue: "hi" },
+        { name: 'city', label: 'City', required: true, defaultValue: "hi" },
+        { name: 'street', label: 'Street', required: true, defaultValue: "hi" },
+        { name: 'houseNumber', label: 'House Number', required: true, defaultValue: "hi" },
+        { name: 'zip', label: 'ZIP Code', required: true, defaultValue: "hi" },
     ];
+
     // const [initialFormData, setInitialFormData] = useState(fields.map((item) => item.value));
 
     const location = useLocation();
     const cardId = location.state?.cardId || {}
     const requestOptions = {
         method: "GET",
-        redirect: "follow"
+        redirect: "follow",
+
     };
+    useEffect(() => {
+        fetch(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${cardId}`, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                setFeildData(result);
+            })
+            .catch((error) => console.error(error));
+    }, []);
+
+    useEffect(() => {
+        if (feildData != undefined) {
+            console.log(feildData);
+        }
+    }, [feildData]);
+
+    console.log(feildData);
 
 
-    fetch(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${cardId}`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-            console.log(result.title);
-
-        })
-        .catch((error) => console.error(error));
 
 
     return (
@@ -138,7 +147,7 @@ export default function EditCardPage() {
                             label={field.label}
                             onChange={handleChange}
                             // value={field.value || ""}
-                            defaultValue={"test"}
+                            defaultValue={field.defaultValue}
                             required={field.required}
                             error={!!errors[field.name]}
                             helperText={errors[field.name]}
