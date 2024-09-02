@@ -12,13 +12,13 @@ export default function EditCardPage() {
     const {
         errors,
         handleReset,
-        validateForm,
+        validateFormForEditingCard,
         onSubmit,
         data,
-
+        fieldData,
+        setFieldData,
     } = useForm(addCardObj, cardSchema, () => { });
 
-    const [fieldData, setFieldData] = useState({});
 
     const location = useLocation();
     const cardId = location.state?.cardId || '';
@@ -146,7 +146,7 @@ export default function EditCardPage() {
         <Form
             onSubmit={handleSubmit}
             onReset={handleReset1}
-            validateForm={validateForm}
+            validateForm={validateFormForEditingCard} // ודא שזה מקושר נכון
         >
             <Typography variant="h4" align="center" gutterBottom>
                 EDIT CARD

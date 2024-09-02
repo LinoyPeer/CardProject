@@ -4,6 +4,8 @@ import Joi from "joi";
 export default function useForm(initialForm, schema, handleSubmit) {
   const [data, setData] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [fieldData, setFieldData] = useState({});
+
 
   const validateProperty = useCallback(
     (name, value) => {
@@ -52,6 +54,15 @@ export default function useForm(initialForm, schema, handleSubmit) {
     return true;
   }, [schema, data]);
 
+  const validateFormForEditingCard = useCallback(() => {
+    const joiSchema = Joi.object(schema);
+    const { error } = joiSchema.validate(fieldData);
+    if (error) {
+      return false;
+    }
+    return true;
+  }, [schema, fieldData]);
+
   const handleReset = useCallback(() => {
     setData(initialForm);
     setErrors({});
@@ -68,7 +79,10 @@ export default function useForm(initialForm, schema, handleSubmit) {
     handleChange,
     handleChangeCheckBox,
     validateForm,
+    validateFormForEditingCard,
     handleReset,
     onSubmit,
+    fieldData,
+    setFieldData,
   };
 }
