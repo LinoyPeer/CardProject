@@ -7,8 +7,11 @@ import { TextField } from '@mui/material';
 import useForm from '../../forms/hooks/useForm.js';
 import addCardObj from '../../users/helpers/initialForms/initialCardForm.js';
 import axios from 'axios';
+import { useSnack } from '../../providers/SnackbarProvider.jsx';
 
 export default function AddCardPage() {
+    const setSnack = useSnack();
+
     const {
         data,
         errors,
@@ -41,6 +44,8 @@ export default function AddCardPage() {
                     const myHeaders = new Headers();
                     myHeaders.append("x-auth-token", token);
                     myHeaders.append("Content-Type", "application/json");
+                    setSnack("success", "New card created seccessfully!");
+
 
                     const convertedObjectToTheServer = JSON.stringify({
                         "title": data.title,

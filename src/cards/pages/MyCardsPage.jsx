@@ -5,7 +5,7 @@ import { useCurrentUser } from "../../users/providers/UserProvider";
 import CardsFeedback from "../components/CardsFeedback";
 
 export default function MyCardsPage() {
-  const { cards, getMyCards, isLoading, error, handleDelete, handleLike } = useCards();
+  const { cards, getMyCards, isLoading, error, handleDelete, handleLike, filteredCards } = useCards();
 
   useEffect(() => {
     getMyCards();
@@ -16,7 +16,7 @@ export default function MyCardsPage() {
       <PageHeader title={"My cards"} subtitle={"Welcome to may cards page"} />
       Here you will find the cards you created
       <CardsFeedback
-        cards={cards}
+        cards={filteredCards}
         isLoading={isLoading}
         error={error}
         handleDelete={handleDelete}

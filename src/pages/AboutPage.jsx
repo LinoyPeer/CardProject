@@ -19,12 +19,12 @@ export default function AboutPage() {
 
         }}
       >
-        {/* <br /> */}
+
 
         <Container sx={{ flex: 1, mr: 2 }}>
           <Typography variant="h6">About My Card Website</Typography>
           <Typography variant="body1" paragraph>
-            {/* <br /> */}
+
 
             Welcome to my Card Website, your go-to platform for creating, managing, and sharing business cards. Whether you're a business owner, freelancer, or just someone who wants to showcase their professional identity, our website offers a seamless experience for all your card needs.
 
