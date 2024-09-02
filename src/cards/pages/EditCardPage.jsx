@@ -1,24 +1,24 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Form from '../../forms/components/Form';
-import cardSchema from '../../users/models/cardSchema';
 import { TextField } from '@mui/material';
 import useForm from '../../forms/hooks/useForm.js';
 import addCardObj from '../../users/helpers/initialForms/initialCardForm.js';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import cardSchema from '../../users/models/cardSchema.js';
 
 export default function EditCardPage() {
+    const [initialData, setInitialData] = useState(addCardObj);
     const {
         errors,
         handleReset,
-        validateFormForEditingCard,
+        validateForm,
         onSubmit,
         data,
-        fieldData,
-        setFieldData,
-    } = useForm(addCardObj, cardSchema, () => { });
-
+        setData,
+        handleChange,
+    } = useForm(initialData, cardSchema, handleSubmit);
 
     const location = useLocation();
     const cardId = location.state?.cardId || '';
@@ -37,8 +37,7 @@ export default function EditCardPage() {
                 return response.json();
             })
             .then((result) => {
-
-                setFieldData({
+                const formattedData = {
                     title: result.title,
                     subtitle: result.subtitle,
                     description: result.description,
@@ -53,11 +52,13 @@ export default function EditCardPage() {
                     street: result.address.street,
                     houseNumber: result.address.houseNumber,
                     zip: result.address.zip
-                });
+                };
+                setInitialData(formattedData);
+                setData(formattedData);
                 console.log(result);
             })
             .catch((error) => console.error('There was a problem with the fetch operation:', error));
-    }, [cardId]);
+    }, [cardId, setData]);
 
     const fields = [
         { name: 'title', label: 'Title', required: true },
@@ -76,15 +77,7 @@ export default function EditCardPage() {
         { name: 'zip', label: 'ZIP Code', required: true },
     ];
 
-    const handleFieldChange = (e) => {
-        const { name, value } = e.target;
-        setFieldData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = () => {
+    function handleSubmit() {
         let token = localStorage.getItem('my token');
         try {
             const myHeaders = new Headers();
@@ -92,36 +85,36 @@ export default function EditCardPage() {
             myHeaders.append("Content-Type", "application/json");
 
             const convertedObjectToTheServer = JSON.stringify({
-                "title": fieldData.title,
-                "subtitle": fieldData.subtitle,
-                "description": fieldData.description,
-                "phone": fieldData.phone,
-                "email": fieldData.email,
-                "web": fieldData.webUrl,
+                "title": data.title,
+                "subtitle": data.subtitle,
+                "description": data.description,
+                "phone": data.phone,
+                "email": data.email,
+                "web": data.webUrl,
                 "image": {
-                    "url": fieldData.imageUrl,
-                    "alt": fieldData.imageAlt
+                    "url": data.imageUrl,
+                    "alt": data.imageAlt
                 },
                 "address": {
-                    "state": fieldData.state,
-                    "country": fieldData.country,
-                    "city": fieldData.city,
-                    "street": fieldData.street,
-                    "houseNumber": fieldData.houseNumber,
-                    "zip": fieldData.zip
+                    "state": data.state,
+                    "country": data.country,
+                    "city": data.city,
+                    "street": data.street,
+                    "houseNumber": data.houseNumber,
+                    "zip": data.zip
                 }
             });
 
             console.log("Sending data:", convertedObjectToTheServer);
 
             const requestOptions = {
-                method: "POST",
+                method: "PUT",
                 headers: myHeaders,
                 body: convertedObjectToTheServer,
                 redirect: "follow"
             };
 
-            fetch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards", requestOptions)
+            fetch(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${cardId}`, requestOptions)
                 .then((response) => {
                     console.log("Response status:", response.status);
                     if (!response.ok) {
@@ -137,16 +130,13 @@ export default function EditCardPage() {
         } catch (error) {
             console.log('Submit error:', error);
         }
-    };
-    const handleReset1 = () => {
-        setFieldData({})
     }
 
     return (
         <Form
-            onSubmit={handleSubmit}
-            onReset={handleReset1}
-            validateForm={validateFormForEditingCard} // ודא שזה מקושר נכון
+            onSubmit={onSubmit}
+            onReset={handleReset}
+            validateForm={validateForm}
         >
             <Typography variant="h4" align="center" gutterBottom>
                 EDIT CARD
@@ -162,8 +152,8 @@ export default function EditCardPage() {
                         <TextField
                             name={field.name}
                             label={field.label}
-                            onChange={handleFieldChange}
-                            value={fieldData[field.name] || ""}
+                            onChange={handleChange}
+                            value={data[field.name] || ""}
                             required={field.required}
                             error={!!errors[field.name]}
                             helperText={errors[field.name]}
