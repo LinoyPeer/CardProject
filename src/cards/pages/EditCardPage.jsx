@@ -37,16 +37,16 @@ export default function EditCardPage() {
                 return response.json();
             })
             .then((result) => {
-                // Update fieldData to match the structure of the response
+
                 setFieldData({
                     title: result.title,
                     subtitle: result.subtitle,
                     description: result.description,
                     phone: result.phone,
                     email: result.email,
-                    webUrl: result.web, // Update to match response structure
-                    imageUrl: result.image.url, // Update to match response structure
-                    imageAlt: result.image.alt, // Update to match response structure
+                    webUrl: result.web,
+                    imageUrl: result.image.url,
+                    imageAlt: result.image.alt,
                     state: result.address.state,
                     country: result.address.country,
                     city: result.address.city,
@@ -97,10 +97,10 @@ export default function EditCardPage() {
                 "description": fieldData.description,
                 "phone": fieldData.phone,
                 "email": fieldData.email,
-                "web": fieldData.webUrl, // Update to match request structure
+                "web": fieldData.webUrl,
                 "image": {
-                    "url": fieldData.imageUrl, // Update to match request structure
-                    "alt": fieldData.imageAlt // Update to match request structure
+                    "url": fieldData.imageUrl,
+                    "alt": fieldData.imageAlt
                 },
                 "address": {
                     "state": fieldData.state,
@@ -112,7 +112,7 @@ export default function EditCardPage() {
                 }
             });
 
-            console.log("Sending data:", convertedObjectToTheServer); // Log data being sent
+            console.log("Sending data:", convertedObjectToTheServer);
 
             const requestOptions = {
                 method: "POST",
@@ -123,19 +123,19 @@ export default function EditCardPage() {
 
             fetch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards", requestOptions)
                 .then((response) => {
-                    console.log("Response status:", response.status); // Log response status
+                    console.log("Response status:", response.status);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
                     return response.text();
                 })
                 .then((result) => {
-                    console.log("Submit result:", result); // Log result of submit
+                    console.log("Submit result:", result);
                 })
                 .catch((error) => console.error('There was a problem with the fetch operation:', error));
 
         } catch (error) {
-            console.log('Submit error:', error); // Log errors in submit process
+            console.log('Submit error:', error);
         }
     };
     const handleReset1 = () => {
