@@ -54,19 +54,16 @@ export default function useForm(initialForm, schema, handleSubmit) {
     return true;
   }, [schema, data]);
 
-  const validateFormForEditingCard = useCallback(() => {
-    const joiSchema = Joi.object(schema);
-    const { error } = joiSchema.validate(fieldData);
-    if (error) {
-      return false;
-    }
-    return true;
-  }, [schema, fieldData]);
 
   const handleReset = useCallback(() => {
     setData(initialForm);
     setErrors({});
   }, [initialForm]);
+  const handleResetForEdit = useCallback(() => {
+    setFieldData({})
+  }, [fieldData]);
+
+
 
   const onSubmit = useCallback(() => {
     handleSubmit(data);
@@ -79,10 +76,10 @@ export default function useForm(initialForm, schema, handleSubmit) {
     handleChange,
     handleChangeCheckBox,
     validateForm,
-    validateFormForEditingCard,
     handleReset,
     onSubmit,
     fieldData,
+    handleResetForEdit,
     setFieldData,
   };
 }

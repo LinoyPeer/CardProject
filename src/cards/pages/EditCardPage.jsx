@@ -130,6 +130,7 @@ export default function EditCardPage() {
         } catch (error) {
             console.log('Submit error:', error);
         }
+
     }
 
     return (

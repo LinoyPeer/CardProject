@@ -13,7 +13,7 @@ export default function AddCardPage() {
         data,
         errors,
         handleChange,
-        handleReset,
+        handleResetForEdit,
         validateForm,
         onSubmit,
     } = useForm(addCardObj, cardSchema, () => { });
@@ -81,7 +81,7 @@ export default function AddCardPage() {
                 }
 
             }}
-            onReset={handleReset}
+            onReset={handleResetForEdit}
             validateForm={validateForm}
         >
             <Typography variant="h4" align="center" gutterBottom>
