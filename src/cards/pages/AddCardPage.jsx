@@ -8,6 +8,8 @@ import useForm from '../../forms/hooks/useForm.js';
 import addCardObj from '../../users/helpers/initialForms/initialCardForm.js';
 import axios from 'axios';
 import { useSnack } from '../../providers/SnackbarProvider.jsx';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../routes/routesModel.js';
 
 export default function AddCardPage() {
     const setSnack = useSnack();
@@ -20,6 +22,8 @@ export default function AddCardPage() {
         validateForm,
         onSubmit,
     } = useForm(addCardObj, cardSchema, () => { });
+    const navigate = useNavigate();
+
     const fields = [
         { name: 'title', label: 'Title', required: true, required: true },
         { name: 'subtitle', label: 'Subtitle', required: true },
@@ -44,7 +48,7 @@ export default function AddCardPage() {
                     const myHeaders = new Headers();
                     myHeaders.append("x-auth-token", token);
                     myHeaders.append("Content-Type", "application/json");
-                    setSnack("success", "New card created seccessfully!");
+                    setSnack("success", "New card created successfully !");
 
 
                     const convertedObjectToTheServer = JSON.stringify({
@@ -80,7 +84,7 @@ export default function AddCardPage() {
                         .then((response) => response.text())
                         .then((result) => console.log(result))
                         .catch((error) => console.error(error));
-
+                    navigate(ROUTES.MY_CARDS)
                 } catch (error) {
                     console.log(error);
                 }

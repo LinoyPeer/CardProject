@@ -14,7 +14,8 @@ export default function CardActionBar({
   handleDelete,
   handleEdit,
   handleLike,
-  likes
+  likes,
+  phone,
 }) {
   const { user } = useCurrentUser();
   const navigate = useNavigate();
@@ -22,32 +23,43 @@ export default function CardActionBar({
   return (
     <CardActions sx={{ justifyContent: "space-between" }}>
       <Box>
-        {user && (user.isAdmin || user._id == userId) && <IconButton onClick={() => handleDelete(cardId)}>
-          <DeleteIcon sx={{ fontSize: '20px', color: '#918A87' }} />
-        </IconButton>}
+        {user && (user.isAdmin || user._id === userId) && (
+          <IconButton onClick={() => handleDelete(cardId)}>
+            <DeleteIcon sx={{ fontSize: "20px", color: "#918A87" }} />
+          </IconButton>
+        )}
 
-        {user && (user.isAdmin || user._id == userId) && <IconButton onClick={() => {
-          handleEdit(cardId);
-          navigate(ROUTES.EDIT_CARD, { state: { cardId: cardId } })
-
-        }}>
-          <ModeEditIcon sx={{ fontSize: '20px', color: '#918A87' }} />
-        </IconButton>}
-      </Box >
-      <Box>
-        <IconButton  >
-          <CallIcon sx={{ fontSize: '20px', color: '#918A87' }} />
-        </IconButton>
-        {user && < IconButton onClick={() => handleLike(cardId)}>
-          <FavoriteIcon sx={{
-            fontSize: '20px',
-            color: likes.includes(user._id) ? 'red' : '#918A87',
-            '&:hover': {
-              color: likes.includes(user._id) ? 'red' : '#918A87',
-            },
-          }} />
-        </IconButton>}
+        {user && (user.isAdmin || user._id === userId) && (
+          <IconButton
+            onClick={() => {
+              handleEdit(cardId);
+              navigate(ROUTES.EDIT_CARD, { state: { cardId: cardId } });
+            }}
+          >
+            <ModeEditIcon sx={{ fontSize: "20px", color: "#918A87" }} />
+          </IconButton>
+        )}
       </Box>
-    </CardActions >
+      <Box>
+        <a href={`tel:${phone}`} style={{ textDecoration: "none" }}>
+          <IconButton>
+            <CallIcon sx={{ fontSize: "20px", color: "#918A87" }} />
+          </IconButton>
+        </a>
+        {user && (
+          <IconButton onClick={() => handleLike(cardId)}>
+            <FavoriteIcon
+              sx={{
+                fontSize: "20px",
+                color: likes.includes(user._id) ? "red" : "#918A87",
+                "&:hover": {
+                  color: likes.includes(user._id) ? "red" : "#918A87",
+                },
+              }}
+            />
+          </IconButton>
+        )}
+      </Box>
+    </CardActions>
   );
 }

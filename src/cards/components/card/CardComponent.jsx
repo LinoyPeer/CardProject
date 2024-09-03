@@ -32,6 +32,7 @@ export default function CardComponent({
           bizNumber={card.bizNumber}
         />
       </CardActionArea>
+
       <CardActionBar
         userId={card.user_id}
         cardId={card._id}

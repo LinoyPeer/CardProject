@@ -10,7 +10,7 @@ export default function useCards() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   const [query, setQuery] = useState("");
-  const [filteredCards, setFilterCards] = useState(null);
+  const [filteredCards, setFilteredCards] = useState(null);
   const [searchParams] = useSearchParams();
   const setSnack = useSnack();
 
@@ -20,7 +20,7 @@ export default function useCards() {
   }, [searchParams]);
   useEffect(() => {
     if (cards) {
-      setFilterCards(
+      setFilteredCards(
         cards.filter(
           card =>
             card.title.includes(query) || String(card.bizNumber).includes(query)
@@ -107,6 +107,7 @@ export default function useCards() {
 
   return {
     filteredCards,
+    setFilteredCards,
     cards,
     card,
     error,

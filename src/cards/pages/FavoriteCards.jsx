@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 import useCards from "../hooks/useCards";
 import { useCurrentUser } from "../../users/providers/UserProvider";
@@ -7,47 +8,43 @@ import CardsFeedback from "../components/CardsFeedback";
 export default function FavoriteCards() {
   const { cards, getAllCards, isLoading, error, handleDelete, handleLike } = useCards();
   const { user } = useCurrentUser();
-  const [favCards, setFavCards] = useState([]);
+  const [searchParams] = useSearchParams();
+  const [filteredCardsOfCards, setFilteredCardsOfCards] = useState([]);
 
-  const likedCardsOfCurrentUser = cards.filter(card => card.likes.includes(user._id));
-  const likedCardsId = likedCardsOfCurrentUser.map(card => card._id);
-  const cardProperty = likedCardsOfCurrentUser.map(singleCardProperty => {
-    console.log(singleCardProperty);
-    return singleCardProperty
-  })
   useEffect(() => {
     getAllCards();
   }, [getAllCards]);
 
   useEffect(() => {
-    try {
-      setFavCards(likedCardsOfCurrentUser)
-    } catch (err) {
-      console.log("There is no liked cards");
-    }
-  }, [cards])
+    if (!user) return;
 
+    const query = searchParams.get("q")?.toLowerCase() || "";
+
+    const likedCardsOfCurrentUser = cards.filter(card => card.likes.includes(user._id));
+
+    const filtered = likedCardsOfCurrentUser.filter(card =>
+      card.title.toLowerCase().includes(query) ||
+      card.subtitle.toLowerCase().includes(query) ||
+      card.description.toLowerCase().includes(query)
+    );
+
+    setFilteredCardsOfCards(filtered);
+  }, [cards, searchParams, user]);
 
   return (
     <>
       <PageHeader
-        title={"Favorite cards"}
-        subtitle={"Welcome to favorite cards page"}
+        title="Favorite cards"
+        subtitle="Welcome to favorite cards page"
       />
 
-      <div>
-        {console.log("The ID's Of Liked Cards:", likedCardsId)}
-        {console.log("The Liked Cards:", likedCardsOfCurrentUser)}
-      </div>
-      <div>
-        <CardsFeedback
-          cards={favCards}
-          isLoading={isLoading}
-          error={error}
-          handleDelete={handleDelete}
-          handleLike={handleLike}
-        />
-      </div>
+      <CardsFeedback
+        cards={filteredCardsOfCards}
+        isLoading={isLoading}
+        error={error}
+        handleDelete={handleDelete}
+        handleLike={handleLike}
+      />
     </>
   );
 }

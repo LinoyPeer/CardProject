@@ -4,9 +4,11 @@ import Form from '../../forms/components/Form';
 import { TextField } from '@mui/material';
 import useForm from '../../forms/hooks/useForm.js';
 import addCardObj from '../../users/helpers/initialForms/initialCardForm.js';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import cardSchema from '../../users/models/cardSchema.js';
+import { useSnack } from '../../providers/SnackbarProvider.jsx';
+import ROUTES from '../../routes/routesModel.js';
 
 export default function EditCardPage() {
     const [initialData, setInitialData] = useState(addCardObj);
@@ -19,6 +21,8 @@ export default function EditCardPage() {
         setData,
         handleChange,
     } = useForm(initialData, cardSchema, handleSubmit);
+    const setSnack = useSnack();
+    const navigate = useNavigate();
 
     const location = useLocation();
     const cardId = location.state?.cardId || '';
@@ -104,7 +108,8 @@ export default function EditCardPage() {
                     "zip": data.zip
                 }
             });
-
+            setSnack("success", "current card updated successfully !");
+            navigate(ROUTES.MY_CARDS)
             console.log("Sending data:", convertedObjectToTheServer);
 
             const requestOptions = {
