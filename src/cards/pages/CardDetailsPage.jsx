@@ -72,6 +72,9 @@ export default function CardDetailsPage() {
             <Typography variant="body1" color="text.primary">
               <strong>Card Number:</strong> {card.bizNumber}
             </Typography>
+            <Typography variant="body1" color="text.primary">
+              <strong>Email:</strong> {card.email}
+            </Typography>
             <Divider sx={{ my: 2 }} />
             <Typography variant="body2" color="text.secondary">
               This card represents a business entity and provides essential

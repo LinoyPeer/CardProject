@@ -4,15 +4,27 @@ import PageHeader from "../../components/PageHeader";
 import useCards from "../hooks/useCards";
 import { useCurrentUser } from "../../users/providers/UserProvider";
 import CardsFeedback from "../components/CardsFeedback";
+import { useSnack } from "../../providers/SnackbarProvider";
 
 export default function FavoriteCards() {
   const { cards, getAllCards, isLoading, error, handleDelete, handleLike } = useCards();
   const { user } = useCurrentUser();
   const [searchParams] = useSearchParams();
   const [filteredCardsOfCards, setFilteredCardsOfCards] = useState([]);
+  const setSnack = useSnack();
+
 
   useEffect(() => {
-    getAllCards();
+    try {
+      getAllCards();
+      if (filteredCardsOfCards) {
+        setSnack("success", "All my favorite cards are here!");
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+
   }, [getAllCards]);
 
   useEffect(() => {

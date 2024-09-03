@@ -15,6 +15,7 @@ export default function useCards() {
   const setSnack = useSnack();
 
   useAxios();
+
   useEffect(() => {
     setQuery(searchParams.get("q") ?? "");
   }, [searchParams]);

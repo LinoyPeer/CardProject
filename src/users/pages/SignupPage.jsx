@@ -8,9 +8,7 @@ import signupSchema from "../models/signupSchema";
 import { Container } from "@mui/material";
 import SignupForm from "../components/SignupForm";
 
-const handleSignup = (userDetails) => {
-  console.log(userDetails);
-};
+
 
 export default function SignupPage() {
   const {
@@ -26,7 +24,12 @@ export default function SignupPage() {
   const { user } = useCurrentUser();
 
   if (user) return <Navigate to={ROUTES.ROOT} replace />;
-
+  const avatars = [
+    "/path/to/avatar1.png",
+    "/path/to/avatar2.png",
+    "/path/to/avatar3.png",
+    // המשך הרשימה...
+  ];
   return (
     <Container
       sx={{

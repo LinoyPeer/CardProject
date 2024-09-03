@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
-import { Grid, FormControlLabel, Checkbox } from "@mui/material";
+import { Grid, FormControlLabel, Checkbox, IconButton, Avatar, Box, Typography } from "@mui/material";
 
 export default function SignupForm({
   onSubmit,
@@ -142,12 +142,74 @@ export default function SignupForm({
         sm={6}
         required={false}
       />
+      <Box sx={{
+        display: "flex", flexDirection: "row", gap: "rem", marginTop: "6em",
+      }}>
+        <Typography sx={{
+          marginTop: "-2em",
+        }}>Choose your avatar:</Typography>
+        <IconButton>
+          <Avatar
+            src="/images/AvatarChoose2.jpg"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <Avatar
+            src="/images/AvatarChoose2.jpg"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <Avatar
+            src="/images/AvatarChoose3.jpg"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <Avatar
+            src="/images/AvatarChoose4.jpg"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <Avatar
+            src="/images/AvatarChoose5.jpg"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <Avatar
+            src="/images/AvatarChoose6.jpg"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
+          />
+        </IconButton>
+      </Box>
       <Grid item>
         <FormControlLabel
           onChange={handleChangeCheckBox}
           name="isBusiness"
           control={<Checkbox value={data.isBusiness} color="primary" />}
           label="Signup as business"
+          sx={{ direction: "ltr" }}
         />
       </Grid>
     </Form>

@@ -8,13 +8,23 @@ import { useCurrentUser } from "../../../users/providers/UserProvider";
 export default function LeftNavBar() {
   const { user } = useCurrentUser();
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '1rem',
+      }}
+    >
       <LogoIcon />
       <Logo />
-      <NavBarItem to={ROUTES.CARDS} label={"Cards"} />
-      <NavBarItem to={ROUTES.ABOUT} label={"About"} />
-      {user && <NavBarItem to={ROUTES.FAV_CARDS} label={"Favorites"} />}
-      {user && <NavBarItem to={ROUTES.MY_CARDS} label={"My Crads"} />}
+      <Box sx={{ marginLeft: '0rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        {user && <NavBarItem to={ROUTES.CARDS} label={"Cards"} />}
+        <NavBarItem to={ROUTES.ABOUT} label={"About"} />
+        {user && <NavBarItem to={ROUTES.FAV_CARDS} label={"Favorites"} />}
+        {user && user.isBusiness && (
+          <NavBarItem to={ROUTES.MY_CARDS} label={"My Cards"} />
+        )}
+      </Box>
     </Box>
   );
 }
