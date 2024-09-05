@@ -1,4 +1,3 @@
-// RightNavbar.js
 import React, { useState } from "react";
 import { useTheme } from "../../../providers/CustomThemeProvider";
 import { Box, IconButton } from "@mui/material";

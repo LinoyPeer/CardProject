@@ -40,6 +40,7 @@ export default function CardComponent({
         handleLike={handleLike}
         handleEdit={handleEdit}
         likes={card.likes}
+        phone={card.phone}
       />
     </Card>
   );

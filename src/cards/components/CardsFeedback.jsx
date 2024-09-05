@@ -32,7 +32,6 @@ export default function CardsFeedback({
         handleLike={handleLike}
       />
     );
-  {/* אני הוספתי */ }
   <CardActionBar
     userId={card.userId}
     cardId={card._id}

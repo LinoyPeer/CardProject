@@ -24,6 +24,9 @@ export default function LeftNavBar() {
         {user && user.isBusiness && (
           <NavBarItem to={ROUTES.MY_CARDS} label={"My Cards"} />
         )}
+        {user && user.isAdmin && (
+          <NavBarItem to={ROUTES.CRM_ADMIN} label={"CRM"} />
+        )}
       </Box>
     </Box>
   );

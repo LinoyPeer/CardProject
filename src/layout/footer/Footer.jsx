@@ -5,7 +5,7 @@ import StyleIcon from "@mui/icons-material/Style";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
 import { useCurrentUser } from "../../users/providers/UserProvider";
-import { Favorite, RecentActors } from "@mui/icons-material";
+import { Favorite, FindInPage, RecentActors } from "@mui/icons-material";
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function Footer() {
 
       <BottomNavigation showLabels
         sx={{
-          backgroundColor: '#CFC9C6', // צבע כהה יותר ל-header
+          backgroundColor: '#CFC9C6',
           boxShadow: 'none',
         }} >
         <BottomNavigationAction
@@ -94,6 +94,21 @@ export default function Footer() {
               />
             }
             onClick={() => navigate(ROUTES.FAV_CARDS)}
+          />
+        )}
+        {user && (user.isAdmin) && (
+          <BottomNavigationAction
+            label="CRM"
+            icon={
+              <FindInPage
+                sx={{
+                  color: "#EBE2CA",
+                  boxShadow: "0px 11px 11px 4px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "50%",
+                }}
+              />
+            }
+            onClick={() => navigate(ROUTES.CRM_ADMIN)}
           />
         )}
       </BottomNavigation>

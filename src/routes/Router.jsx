@@ -11,6 +11,7 @@ import SignupPage from "../users/pages/SignupPage";
 import CardDetailsPage from "../cards/pages/CardDetailsPage";
 import AddCardPage from "../cards/pages/AddCardPage";
 import EditCardPage from "../cards/pages/EditCardPage";
+import CrmAdmin from "../users/pages/CrmAdmin";
 
 export default function Router() {
   return (
@@ -25,6 +26,7 @@ export default function Router() {
       <Route path={ROUTES.CARD_INFO + "/:id"} element={<CardDetailsPage />} />
       <Route path={ROUTES.ADD_CARD} element={<AddCardPage />} />
       <Route path={ROUTES.EDIT_CARD} element={<EditCardPage />} />
+      <Route path={ROUTES.CRM_ADMIN} element={<CrmAdmin />} />
 
       <Route path="*" element={<ErrorPage />} />
     </Routes>

@@ -19,7 +19,7 @@ export default function SignupPage() {
     validateForm,
     onSubmit,
     handleChangeCheckBox,
-  } = useForm(initialSignupForm, signupSchema, handleSignup);
+  } = useForm(initialSignupForm, signupSchema, () => { });
 
   const { user } = useCurrentUser();
 
