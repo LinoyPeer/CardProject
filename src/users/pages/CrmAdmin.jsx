@@ -14,12 +14,11 @@ import {
 import useCrmUsers from '../hooks/useCrmUsers';
 import DeleteIcon from "@mui/icons-material/Delete";
 
-
 export default function CrmUsers() {
     const [selected, setSelected] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
-    const { users, setUsersToDelete, setSingleuserToDelete, singleuserToDelete, usersToDelete, handleDeleteUsers } = useCrmUsers();
+    const { users, error, handleDeleteUsers, setUsersToDelete, setSingleuserToDelete, singleuserToDelete, usersToDelete, setUsers } = useCrmUsers();
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
@@ -30,24 +29,22 @@ export default function CrmUsers() {
         setSelected([]);
     };
 
-    const handleClick = (id) => {
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
+    const handleDeleteAllSelected = async () => {
+        const toDelete = users.filter(user => selected.includes(user._id))
+        if (toDelete.length) {
+            await Promise.all(
+                toDelete.map(user => handleDeleteUsers(user._id))
             );
+            setUsers(prev => prev.filter(user => !toDelete.some(toDeleteUser => toDeleteUser._id === user._id)));
+            setSelected([]);
         }
+    };
 
-        setSelected(newSelected);
+    const handleClick = (id) => {
+        setSelected(prev => {
+            const isSelected = prev.indexOf(id) !== -1;
+            return isSelected ? prev.filter(id => id !== id) : [...prev, id];
+        });
     };
 
     const handleChangePage = (event, newPage) => {
@@ -127,10 +124,8 @@ export default function CrmUsers() {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 rowsPerPageOptions={[5, 10, 25, 100, 1300]}
-            >
-
-            </TablePagination>
-            <IconButton onClick={() => handleDeleteUsers(users._id)}>
+            />
+            <IconButton onClick={handleDeleteAllSelected}>
                 <DeleteIcon sx={{ fontSize: "20px", color: "#918A87" }} />
             </IconButton>
         </Paper>

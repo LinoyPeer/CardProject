@@ -8,6 +8,7 @@ import Logged from "./Logged";
 import NotLogged from "./NotLogged";
 import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from "./SearchBar";
+import { ManageAccounts } from "@mui/icons-material";
 
 export default function RightNavbar() {
   const { user } = useCurrentUser();
@@ -34,6 +35,7 @@ export default function RightNavbar() {
         alignItems: "center",
       }}
     >
+
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         {isSearchOpen ? (
           <SearchBar onSearch={handleSearch} />
@@ -43,12 +45,15 @@ export default function RightNavbar() {
           </IconButton>
         )}
       </Box>
-
+      <IconButton sx={{ ml: 1 }}>
+        <ManageAccounts />
+      </IconButton>
       <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode}>
         {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </IconButton>
 
       {user ? <Logged /> : <NotLogged />}
+
     </Box>
   );
 }
