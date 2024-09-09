@@ -12,6 +12,7 @@ import CardDetailsPage from "../cards/pages/CardDetailsPage";
 import AddCardPage from "../cards/pages/AddCardPage";
 import EditCardPage from "../cards/pages/EditCardPage";
 import CrmUsers from "../users/pages/CrmUsers";
+import EditProfilePage from "../users/components/EditProfilePage";
 
 export default function Router() {
   return (
@@ -27,6 +28,7 @@ export default function Router() {
       <Route path={ROUTES.ADD_CARD} element={<AddCardPage />} />
       <Route path={ROUTES.EDIT_CARD} element={<EditCardPage />} />
       <Route path={ROUTES.CRM_ADMIN} element={<CrmUsers />} />
+      <Route path={ROUTES.EDIT_USER} element={<EditProfilePage />} />
 
       <Route path="*" element={<ErrorPage />} />
     </Routes>

@@ -16,6 +16,7 @@ const Form = ({
   spacing = 1,
   styles = {},
   children,
+  showSubmitButton = true,
 }) => {
   const navigate = useNavigate();
 
@@ -54,14 +55,17 @@ const Form = ({
             onClick={onReset}
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormButton
-            node="Submit"
-            onClick={onSubmit}
-            disabled={!validateForm()}
-            size="large"
-          />
-        </Grid>
+
+        {showSubmitButton && (
+          <Grid item xs={12}>
+            <FormButton
+              node="Submit"
+              onClick={onSubmit}
+              disabled={!validateForm()}
+              size="large"
+            />
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

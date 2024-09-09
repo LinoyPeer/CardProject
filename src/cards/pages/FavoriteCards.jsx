@@ -5,6 +5,7 @@ import useCards from "../hooks/useCards";
 import { useCurrentUser } from "../../users/providers/UserProvider";
 import CardsFeedback from "../components/CardsFeedback";
 import { useSnack } from "../../providers/SnackbarProvider";
+import RightNavbar from "../../layout/header/right-navigation/RightNavbar";
 
 export default function FavoriteCards() {
   const { cards, getAllCards, isLoading, error, handleDelete, handleLike } = useCards();

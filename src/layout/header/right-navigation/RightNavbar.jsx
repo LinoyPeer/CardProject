@@ -9,11 +9,17 @@ import NotLogged from "./NotLogged";
 import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from "./SearchBar";
 import { ManageAccounts } from "@mui/icons-material";
+import { useLocation, useNavigate } from "react-router-dom";
+import ROUTES from "../../../routes/routesModel";
+
+const showSearchOn = [ROUTES.CARDS, ROUTES.FAV_CARDS, ROUTES.MY_CARDS]
 
 export default function RightNavbar() {
   const { user } = useCurrentUser();
   const { isDark, toggleDarkMode } = useTheme();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearchClick = () => {
     setIsSearchOpen(true);
@@ -36,18 +42,22 @@ export default function RightNavbar() {
       }}
     >
 
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {isSearchOpen ? (
-          <SearchBar onSearch={handleSearch} />
-        ) : (
-          <IconButton title="Search" onClick={handleSearchClick}>
-            <SearchIcon />
-          </IconButton>
-        )}
-      </Box>
-      <IconButton title="Edit Profile" sx={{ ml: 1 }}>
+      {
+        showSearchOn.some(route => location.pathname.endsWith(route)) &&
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {isSearchOpen ? (
+            <SearchBar onSearch={handleSearch} />
+          ) : (
+            <IconButton title="Search" onClick={handleSearchClick}>
+              <SearchIcon />
+            </IconButton>
+          )}
+        </Box>
+      }
+
+      {user && <IconButton title="Edit Profile" sx={{ ml: 1 }} onClick={() => navigate(ROUTES.EDIT_USER)} >
         <ManageAccounts />
-      </IconButton>
+      </IconButton>}
       <IconButton title="Accessabily" sx={{ ml: 1 }} onClick={toggleDarkMode}>
         {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </IconButton>
