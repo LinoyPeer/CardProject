@@ -40,15 +40,15 @@ export default function RightNavbar() {
         {isSearchOpen ? (
           <SearchBar onSearch={handleSearch} />
         ) : (
-          <IconButton onClick={handleSearchClick}>
+          <IconButton title="Search" onClick={handleSearchClick}>
             <SearchIcon />
           </IconButton>
         )}
       </Box>
-      <IconButton sx={{ ml: 1 }}>
+      <IconButton title="Edit Profile" sx={{ ml: 1 }}>
         <ManageAccounts />
       </IconButton>
-      <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode}>
+      <IconButton title="Accessabily" sx={{ ml: 1 }} onClick={toggleDarkMode}>
         {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </IconButton>
 

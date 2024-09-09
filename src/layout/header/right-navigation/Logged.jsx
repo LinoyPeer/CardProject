@@ -23,12 +23,15 @@ export default function Logged() {
   return (
     <Tooltip title="Open settings">
       <>
-        <LogoutIcon
+        <IconButton
+          title="Logout"
           onClick={logOut}
           sx={{
             marginRight: "1em",
             marginLeft: "1em",
-          }} />
+          }} >
+          <LogoutIcon />
+        </IconButton>
         <IconButton sx={{
           p: 0, display: "inline-flex", marginLeft: 2, marginRight: 2, marginTop: "-0.5em",
         }}>
