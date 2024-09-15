@@ -72,42 +72,38 @@ export default function useCards() {
   }, []);
 
   const handleDelete = useCallback(async (id) => {
-    if (!confirm('ARE YOU SURE YOU WANT TO DELETE THIS CARD?')) return;
+    const cardToDelete = cards.find(card => card._id === id);
 
-    try {
-      const cardToDelete = cards.find(card => card._id === id);
-
-      if (!cardToDelete) {
-        throw new Error("Card not found");
-      }
-
-      let data = JSON.stringify({
-        "bizNumber": cardToDelete.bizNumber,
-      });
-
-      let config = {
-        method: 'delete',
-        maxBodyLength: Infinity,
-        url: `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`,
-        headers: {
-          'x-auth-token': `${token}`,
-          'Content-Type': 'application/json'
-        },
-        data: data
-      };
-      const response = await axios.request(config);
-      const deletedCard = response.data;
-      setCard(deletedCard);
-      alert('THE CARD HAS BEEN DELETED');
-      console.log("Card " + id + " deleted");
-      setCards(prev => prev.filter(cardToCheck => cardToCheck._id !== id));
-    } catch (error) {
-      console.log(error);
-      setError(error.message);
+    if (!cardToDelete) {
+      throw new Error("Card not found");
     }
+
+    let data = JSON.stringify({
+      "bizNumber": cardToDelete.bizNumber,
+    });
+    let config = {
+      method: 'delete',
+      maxBodyLength: Infinity,
+      url: `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`,
+      headers: {
+        'x-auth-token': `${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setCard(response.data);
+        console.log("Card " + id + " deleted");
+        setCards(prev => prev.filter(cardToCheck => cardToCheck._id !== id));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setIsLoading(false);
-    getMyCards();
-  }, [cards, token, getMyCards]);
+  }, [cards, token]);
 
 
   const handleLike = useCallback(async (id) => {
