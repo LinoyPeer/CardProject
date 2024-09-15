@@ -13,6 +13,8 @@ export default function useCards() {
   const [filteredCards, setFilteredCards] = useState(null);
   const [searchParams] = useSearchParams();
   const setSnack = useSnack();
+  let token = localStorage.getItem('my token');
+
 
   useAxios();
 
@@ -70,23 +72,43 @@ export default function useCards() {
   }, []);
 
   const handleDelete = useCallback(async (id) => {
-    confirm('ARE YOU SURE YOU WANT TO DELETE THIS CARD?')
+    if (!confirm('ARE YOU SURE YOU WANT TO DELETE THIS CARD?')) return;
+
     try {
-      const response = await axios.delete(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`);
+      const cardToDelete = cards.find(card => card._id === id);
+
+      if (!cardToDelete) {
+        throw new Error("Card not found");
+      }
+
+      let data = JSON.stringify({
+        "bizNumber": cardToDelete.bizNumber,
+      });
+
+      let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`,
+        headers: {
+          'x-auth-token': `${token}`,
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+      const response = await axios.request(config);
       const deletedCard = response.data;
       setCard(deletedCard);
-      alert('THE CARD HAS DELETED');
+      alert('THE CARD HAS BEEN DELETED');
       console.log("Card " + id + " deleted");
-      setCards(prev => prev.map(cardToCheck => {
-        if (cardToCheck._id !== id) { return cardToCheck }
-        return deletedCard;
-      }));
+      setCards(prev => prev.filter(cardToCheck => cardToCheck._id !== id));
     } catch (error) {
+      console.log(error);
       setError(error.message);
     }
     setIsLoading(false);
     getMyCards();
-  }, []);
+  }, [cards, token, getMyCards]);
+
 
   const handleLike = useCallback(async (id) => {
     try {
