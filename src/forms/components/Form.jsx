@@ -5,6 +5,7 @@ import FormButton from "./FormButton";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import LoopIcon from "@mui/icons-material/Loop";
+import useUsers from "../../users/hooks/useUsers";
 
 const Form = ({
   title = "",
@@ -17,7 +18,9 @@ const Form = ({
   styles = {},
   children,
   showSubmitButton = true,
+  isBlocked,
 }) => {
+  const { isLoading } = useUsers();
   const navigate = useNavigate();
 
   return (
@@ -61,7 +64,7 @@ const Form = ({
             <FormButton
               node="Submit"
               onClick={onSubmit}
-              disabled={!validateForm()}
+              disabled={isBlocked || isLoading || !validateForm()}
               size="large"
             />
           </Grid>

@@ -11,7 +11,7 @@ import { ManageAccounts } from "@mui/icons-material";
 
 export default function Logged() {
   const navigaete = useNavigate();
-  const { setUser } = useCurrentUser();
+  const { setUser, user } = useCurrentUser();
   function logOut() {
     localStorage.setItem("my token", undefined);
     setUser(null)

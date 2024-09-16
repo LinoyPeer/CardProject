@@ -12,6 +12,31 @@ export const login = async (userLogin) => {
   }
 };
 
+
+//   let data = JSON.stringify({
+//     "email": userLogin.email,
+//     "password": userLogin.email
+//   });
+
+//   let config = {
+//     method: 'post',
+//     maxBodyLength: Infinity,
+//     url: 'https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/login',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     data: data
+//   };
+
+//   axios.request(config)
+//     .then((response) => {
+//       console.log(JSON.stringify(response.data));
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
+
 export const signup = async (normalizedUser) => {
   try {
     const { data } = await axios.post(apiUrl, normalizedUser);

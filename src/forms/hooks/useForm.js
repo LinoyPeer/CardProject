@@ -32,7 +32,6 @@ export default function useForm(initialForm, schema, handleSubmit) {
           return obj;
         });
       }
-
       setData((prev) => ({ ...prev, [name]: value }));
     },
     [validateProperty]
@@ -64,10 +63,14 @@ export default function useForm(initialForm, schema, handleSubmit) {
   }, [fieldData]);
 
 
-
-  const onSubmit = useCallback(() => {
+  // const onSubmit = useCallback(() => {
+  //   handleSubmit(data);
+  // }, [data]);
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
     handleSubmit(data);
-  }, [data]);
+  }, [data, handleSubmit]);
+
 
   return {
     data,
