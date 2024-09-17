@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Form from '../../forms/components/Form';
 import cardSchema from '../../users/models/cardSchema';
-import { TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import useForm from '../../forms/hooks/useForm.js';
 import addCardObj from '../../users/helpers/initialForms/initialCardForm.js';
 import axios from 'axios';
@@ -41,86 +41,106 @@ export default function AddCardPage() {
         { name: 'zip', label: 'ZIP Code', required: true },
     ];
     return (
-        <Form
-            onSubmit={() => {
-                let token = localStorage.getItem('my token');
-                try {
-                    const myHeaders = new Headers();
-                    myHeaders.append("x-auth-token", token);
-                    myHeaders.append("Content-Type", "application/json");
-                    setSnack("success", "New card created successfully !");
-
-
-                    const convertedObjectToTheServer = JSON.stringify({
-                        "title": data.title,
-                        "subtitle": data.subtitle,
-                        "description": data.description,
-                        "phone": data.phone,
-                        "email": data.email,
-                        "web": data.webUrl,
-                        "image": {
-                            "url": data.imageUrl,
-                            "alt": data.altUrl
-                        },
-                        "address": {
-                            "state": data.state,
-                            "country": data.country,
-                            "city": data.city,
-                            "street": data.street,
-                            "houseNumber": data.houseNumber,
-                            "zip": data.zip
-                        }
-                    });
-
-
-                    const requestOptions = {
-                        method: "POST",
-                        headers: myHeaders,
-                        body: convertedObjectToTheServer,
-                        redirect: "follow"
-                    };
-
-                    fetch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards", requestOptions)
-                        .then((response) => response.text())
-                        .then((result) => console.log(result))
-                        .catch((error) => console.error(error));
-                    navigate(ROUTES.MY_CARDS)
-                } catch (error) {
-                    console.log(error);
-                }
-
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh', // גובה העמוד כולו למרכז אנכית
             }}
-            onReset={handleResetForEdit}
-            validateForm={validateForm}
         >
-            <Typography variant="h4" align="center" gutterBottom>
-                ADD NEW CARD
-            </Typography>
-            <Grid
-                container spacing={2} justifyContent="center"
+            <Box
+                width={750} // רוחב הקופסה הפנימית
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column', // סידור אנכי של תוכן
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
             >
+                <Form
+                    onSubmit={() => {
+                        let token = localStorage.getItem('my token');
+                        try {
+                            const myHeaders = new Headers();
+                            myHeaders.append("x-auth-token", token);
+                            myHeaders.append("Content-Type", "application/json");
+                            setSnack("success", "New card created successfully!");
 
-                {fields.map((field) => (
+                            const convertedObjectToTheServer = JSON.stringify({
+                                title: data.title,
+                                subtitle: data.subtitle,
+                                description: data.description,
+                                phone: data.phone,
+                                email: data.email,
+                                web: data.webUrl,
+                                image: {
+                                    url: data.imageUrl,
+                                    alt: data.altUrl
+                                },
+                                address: {
+                                    state: data.state,
+                                    country: data.country,
+                                    city: data.city,
+                                    street: data.street,
+                                    houseNumber: data.houseNumber,
+                                    zip: data.zip
+                                }
+                            });
+
+                            const requestOptions = {
+                                method: "POST",
+                                headers: myHeaders,
+                                body: convertedObjectToTheServer,
+                                redirect: "follow"
+                            };
+
+                            fetch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards", requestOptions)
+                                .then((response) => response.text())
+                                .then((result) => console.log(result))
+                                .catch((error) => console.error(error));
+                            navigate(ROUTES.MY_CARDS);
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }}
+                    onReset={handleResetForEdit}
+                    validateForm={validateForm}
+                >
+                    <Typography variant="h4" align="center" gutterBottom>
+                        ADD NEW CARD
+                    </Typography>
                     <Grid
-                        key={field.name}
-                        item xs={12} sm={6}
-                        alignItems="center"
+                        container
+                        spacing={2}
                         justifyContent="center"
                     >
-                        <TextField
-                            key={field.name}
-                            name={field.name}
-                            label={field.label}
-                            onChange={handleChange}
-                            value={data[field.name] || ""}
-                            required={field.required}
-                            error={!!errors[field.name]}
-                            helperText={errors[field.name]}
-                            fullWidth
-                        />
+                        {fields.map((field) => (
+                            <Grid
+                                key={field.name}
+                                item
+                                xs={12}
+                                sm={6}
+                                alignItems="center"
+                                justifyContent="center"
+                            >
+                                <TextField
+                                    key={field.name}
+                                    name={field.name}
+                                    label={field.label}
+                                    onChange={handleChange}
+                                    value={data[field.name] || ""}
+                                    required={field.required}
+                                    error={!!errors[field.name]}
+                                    helperText={errors[field.name]}
+                                    fullWidth
+                                />
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
-            </Grid>
-        </Form>
+                </Form>
+            </Box>
+        </Box>
+
     );
 }
