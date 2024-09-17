@@ -6,7 +6,6 @@ import cardSchema from '../../users/models/cardSchema';
 import { Box, TextField } from '@mui/material';
 import useForm from '../../forms/hooks/useForm.js';
 import addCardObj from '../../users/helpers/initialForms/initialCardForm.js';
-import axios from 'axios';
 import { useSnack } from '../../providers/SnackbarProvider.jsx';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../routes/routesModel.js';
@@ -46,14 +45,14 @@ export default function AddCardPage() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100vh', // גובה העמוד כולו למרכז אנכית
+                height: '100vh',
             }}
         >
             <Box
-                width={750} // רוחב הקופסה הפנימית
+                width={750}
                 sx={{
                     display: 'flex',
-                    flexDirection: 'column', // סידור אנכי של תוכן
+                    flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}
