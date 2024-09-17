@@ -16,7 +16,7 @@ export default function Footer() {
     <Paper
       elevation={0}
       sx={{
-        position: "sticky", bottom: 0, left: 0, right: 0
+        position: "sticky", bottom: 0, left: 0, right: 0, zIndex: 20,
       }}
     >
       {!user && (

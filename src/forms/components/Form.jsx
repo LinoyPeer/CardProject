@@ -31,6 +31,7 @@ const Form = ({
       onSubmit={onSubmit}
       autoComplete="off"
       noValidate
+      zIndex={1}
     >
       <Typography align="center" variant="h5" component="h1" mb={2}>
         {title.toUpperCase()}

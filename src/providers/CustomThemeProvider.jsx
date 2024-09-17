@@ -13,21 +13,21 @@ export default function CustomThemeProvider({ children }) {
   const theme = createTheme({
     palette: {
       background: {
-        default: '#ffffff', // הרקע הכללי של ה-body
+        default: '#ffffff',
       },
       primary: {
-        main: '#CFC9C6', // header בצבע כהה יותר
-        contrastText: '#918A87', // hover בצבע
+        main: '#CFC9C6',
+        contrastText: '#918A87',
       },
       secondary: {
-        main: '#F1E8CF', // צבע הכפתורים
+        main: '#F1E8CF',
       },
       text: {
-        primary: '#918A87', // צבע הכותרות
+        primary: '#918A87',
       },
     },
     typography: {
-      fontFamily: 'Tahoma', // פונט כללי
+      fontFamily: 'Tahoma',
     },
     components: {
       MuiButton: {
@@ -35,9 +35,8 @@ export default function CustomThemeProvider({ children }) {
           root: {
             backgroundColor: "F1E8CF",
             justifyContent: "space-between",
-            marginLeft: '2vw',
             '&:hover': {
-              backgroundColor: '#918A87', // צבע hover של הכפתורים
+              backgroundColor: '#918A87',
             },
           },
         },
@@ -45,7 +44,7 @@ export default function CustomThemeProvider({ children }) {
       MuiAppBar: {
         styleOverrides: {
           root: {
-            backgroundColor: '#CFC9C6', // צבע כהה יותר ל-header
+            backgroundColor: '#CFC9C6',
             boxShadow: 'none',
           },
         },
@@ -66,7 +65,7 @@ export default function CustomThemeProvider({ children }) {
             '&:hover': {
               color: '#918A87',
               backgroundColor: '#E1DCD9',
-              borderRadius: '50%', // קצה מעוגל לאייקונים ב-header
+              borderRadius: '50%',
             },
             '& + &': {
               paddingLeft: '8px',
@@ -112,7 +111,7 @@ export default function CustomThemeProvider({ children }) {
       MuiCardContent: {
         styleOverrides: {
           root: {
-            textAlign: 'center', // יישור התיאור של הכרטיסים למרכז
+            textAlign: 'center',
           },
         },
       },
